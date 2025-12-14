@@ -8,8 +8,8 @@ import (
 	"syscall"
 )
 
-var expectedSignals []syscall.Signal{
-	syscall.SIGINT, syscall.SIGTERM
+var expectedSignals = []syscall.Signal{
+	syscall.SIGINT, syscall.SIGTERM,
 }
 
 func WaitContextSignal(cancel context.CancelFunc) error {
