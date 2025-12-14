@@ -8,15 +8,15 @@ import (
 	"syscall"
 )
 
-var expectedSignals = []syscall.Signal{
+var expectedSignals = []os.Signal{
 	syscall.SIGINT, syscall.SIGTERM,
 }
 
-func WaitContextSignal(cancel context.CancelFunc) error {
+func WaitInterruptSignal(cancel context.CancelFunc) error {
 	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(signalChan, expectedSignals...)
 
-	fmt.Println("Received termination signal, shutting down...")
+	fmt.Println("Received termination signal, shutting down...") // todo to tog.Onfo
 
 	<-signalChan
 

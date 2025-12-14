@@ -6,14 +6,12 @@ type closer interface {
 	Close() error
 }
 
-var globalCloser = appCloser{
-	make([]closer, 0, averageClosingsAtApp),
-}
+var globalCloser = newAppCloser(averageClosingsAtApp)
 
 func Add(closeStruct closer) {
-	globalCloser.closers = append(globalCloser.closers, closeStruct)
+	globalCloser.addCloser(closeStruct)
 }
 
 func AddFunc(f func() error) {
-	globalCloser.closers = append(globalCloser.closers, newFuncCloser(f))
+	globalCloser.addCloser(newFuncCloser(f))
 }
